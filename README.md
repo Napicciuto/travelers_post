@@ -19,3 +19,10 @@ docker-compose up
 bundle exec rake db:setup
 bundle exec thin start
 ```
+
+## TO_DO if i had more time
+- write more test for creating comments
+- add capybara to test UI
+- break view into partials
+- remove duplication form helper and controller (maybe put that logic in the model)
+- clear inputs after comment is submitted
