@@ -1,0 +1,10 @@
+app:
+  build: .
+  command: bundle exec thin start
+  volumes:
+    - .:/usr/src/app
+  ports:
+    - '3000:3000'
+  environment:
+    RAILS_ENV: development
+
