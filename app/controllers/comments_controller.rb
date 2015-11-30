@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  include Gravatarify::Helper
+  skip_before_filter :verify_authenticity_token
 
   def index
     @comment = Comment.new
@@ -7,9 +7,11 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.create(comment_params)
-    respond_to do |format|
-      format.json { render json: comment_results(@comment) }
+    @comment = Comment.new(comment_params)
+    if @comment.save
+      render json: comment_results(@comment), status: :ok
+    else
+      render json:  @comment, status: :error
     end
   end
 
@@ -17,28 +19,16 @@ class CommentsController < ApplicationController
 
   def comment_results(comment)
     { 
-      gravatar: gravatar_image(comment.email), 
-      name: comment.name, 
+      gravatar: comment.gravatar_image,
+      name: comment.name,
       comment: comment.comment, 
-      count: comment_count, 
+      count: Comment.comment_count, 
       created_at: comment.created_at 
     }
   end
 
-  def gravatar_image(email)
-    url = gravatar_url(email)
-    has_gravatar?(url) ? url : ""
-  end
-
-  def has_gravatar?(url)
-    !url.include?("ed955fd3e6278969c23c7c148aa09aff")
-  end
-
-  def comment_count
-    Comment.count
-  end
-  
   def comment_params
     params.require(:comment).permit(:name, :email, :comment)
   end
 end
+

@@ -23,5 +23,32 @@ RSpec.describe CommentsController, type: :controller do
     end
   end
 
+  describe "POST create" do
+    it "creates a new comment" do
+      comment = FactoryGirl.attributes_for(:comment)
+      expect{ post :create, comment: comment }.to change(Comment, :count).by(1)
+    end
+
+    it "creates a new comment without email" do
+      comment = FactoryGirl.attributes_for(:comment, email: "")
+      expect{ post :create, comment: comment }.to change(Comment, :count).by(1)
+    end
+
+    it "does not save the new comment without name" do
+      comment = FactoryGirl.attributes_for(:comment, name: "")
+      expect{ post :create, comment: comment }.to_not change(Comment, :count)
+    end
+
+    it "does not save the new comment without comment" do
+      comment = FactoryGirl.attributes_for(:comment, comment: "")
+      expect{ post :create, comment: comment }.to_not change(Comment, :count)
+    end
+
+    it "does not save the new comment without a valid email" do
+      comment = FactoryGirl.attributes_for(:comment, email: "bademail")
+      expect{ post :create, comment: comment }.to_not change(Comment, :count)
+    end
+  end
+
 end
 

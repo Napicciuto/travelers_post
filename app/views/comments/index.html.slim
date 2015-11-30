@@ -15,15 +15,4 @@
   span
     = @comments.count
 hr
-#all_comment_wrap
-  .comments_content
-    - @comments.each do |comment|
-      p
-        = gravatar_image(comment.email)
-        = comment.name
-        br
-        = comment.created_at
-        br
-        = comment.comment
-        hr
-
+= render partial: "comments/comments", lacals: { comments: @comments }

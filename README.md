@@ -9,8 +9,12 @@ The new post form should be submitted to the Rails side via AJAX and update the 
 
 ```
 docker-compose build
-docker-compose bundle exec rake db:setup
+docker-compose run app bundle exec rake db:setup
 docker-compose up
+```
+### test with docker
+```
+docker-compose run app bundle exec rspec
 ```
 
 ## To run locally
@@ -20,9 +24,3 @@ bundle exec rake db:setup
 bundle exec thin start
 ```
 
-## TO_DO if i had more time
-- write more test for creating comments
-- add capybara to test UI
-- break view into partials
-- remove duplication form helper and controller (maybe put that logic in the model)
-- clear inputs after comment is submitted
