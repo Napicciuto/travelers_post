@@ -1,0 +1,12 @@
+#all_comment_wrap
+  .comments_content
+    - @comments.each do |comment|
+      p
+        = avatar_image(comment.gravatar_image)
+        = comment.name
+        br
+        = comment.created_at
+        br
+        = comment.comment
+        hr
+

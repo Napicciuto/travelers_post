@@ -18,7 +18,8 @@ $(document).ready(function() {
         }
         html_result += data.name+"<br/>"+data.comment+"<br/>"+data.created_at+"<hr/></p>";
         $('.comments_content').prepend(html_result);
-        $(".comment_count span").html(data.count)
+        $(".comment_count span").html(data.count);
+        $(".new_comment").trigger('reset');
       },
       error: function (jqXHR, textStatus, errorThrown) {
         alert("Sorry something went wrong: " + errorThrown) 
